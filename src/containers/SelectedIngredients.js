@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from 'react-redux';
 import {Icon, List} from "semantic-ui-react";
 
-export default ({ ingredients = [], onDelete }) => {
+const SelectedIngredients = ({ ingredients = [], onDelete }) => {
   return (
     <List animated verticalAlign="middle" divided relaxed={'very'}>
       {ingredients.map(item => (
@@ -15,3 +16,8 @@ export default ({ ingredients = [], onDelete }) => {
     </List>
   );
 };
+const mapStateToProps = state => {
+  return {selectedIngredients: state.selectedIngredients}
+}
+
+export default connect(mapStateToProps)(SelectedIngredients);

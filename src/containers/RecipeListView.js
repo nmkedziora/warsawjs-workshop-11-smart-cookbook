@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import RecipeItem from "./RecipeItem";
 import Counter from "./Counter";
 import {Button, Header, Item, Segment} from "semantic-ui-react";
@@ -6,7 +7,7 @@ import {Button, Header, Item, Segment} from "semantic-ui-react";
 // here you should use function as a children, using Counter component
 // to display -, + and amount how many recipes should be displayed
 
-export default ({ recipes = [], recipeRefresh }) =>
+const RecipeList = ({ recipes = [], recipeRefresh }) =>
     <div>
       <Segment clearing vertical basic>
         <Button.Group basic floated="right">
@@ -18,7 +19,12 @@ export default ({ recipes = [], recipeRefresh }) =>
       </Segment>
       <Item.Group divided>
         {recipes
-          .map(item => <RecipeItem key={item.id} id={item.id} />)}
+          .map(item => <RecipeItem key={item.id} recipe={item} />)}
       </Item.Group>
     </div>
 
+const mapStateToProps = state => {
+  return {recipes: Object.values(state.recipes.entities)};
+}
+
+export default connect(mapStateToProps, null)(RecipeList);
