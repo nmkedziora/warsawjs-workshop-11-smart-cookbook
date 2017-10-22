@@ -4,6 +4,12 @@ import { uniq, without } from 'lodash';
 
 const recipes = (state = {order: [], entities: {}, loading: false}, action) => {
   switch (action.type) {
+    case 'RECIPES_REQUEST_STARTED':
+      return {...state, loading: true};
+    case 'RECIPES_REQUEST_SUCCESS':
+      return {...state, entities: action.payload.recipes, loading: false};
+      case 'RECIPES_REQUEST_ERROR':
+        return {...state, loading: false};
     default:
       return state;
   }
