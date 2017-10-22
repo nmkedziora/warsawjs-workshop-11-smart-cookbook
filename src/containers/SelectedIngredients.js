@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from 'react-redux';
 import {Icon, List} from "semantic-ui-react";
 
+import { getSelectedIngredients } from '../selectors';
+
 const SelectedIngredients = ({ ingredients = [], onDelete }) => {
   return (
     <List animated verticalAlign="middle" divided relaxed={'very'}>
@@ -16,8 +18,9 @@ const SelectedIngredients = ({ ingredients = [], onDelete }) => {
     </List>
   );
 };
+
 const mapStateToProps = state => {
-  return {selectedIngredients: state.selectedIngredients}
+  return {selectedIngredients: getSelectedIngredients(state)}
 }
 
-export default connect(mapStateToProps)(SelectedIngredients);
+export default connect(mapStateToProps, null)(SelectedIngredients);
