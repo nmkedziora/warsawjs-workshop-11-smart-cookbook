@@ -10,23 +10,41 @@ import { getFilteredRecipes } from '../selectors';
 // to display -, + and amount how many recipes should be displayed
 
 const RecipeList = ({ recipes = [], recipeRefresh }) =>
-    <div>
-      <Segment clearing vertical basic>
-        <Button.Group basic floated="right">
-          <Button onClick={recipeRefresh} icon="refresh" />
-        </Button.Group>
-        <Header floated="left" as="h1">
-          Dostępne przepisy:
-        </Header>
-      </Segment>
-      <Item.Group divided>
-        {recipes
-          .map(item => <RecipeItem key={item.id} recipe={item} />)}
-      </Item.Group>
-    </div>
+  <Counter>
+    {(counter, plus, minus) =>
+      <div>
+        <Segment clearing vertical basic>
+          <Button.Group basic floated="right">
+            <Button onClick={minus} icon="minus" />
+            <Button>Limit {counter}</Button>
+            <Button onClick={plus} icon="plus" />
+            <Button onClick={recipeRefresh} icon="refresh" />
+          </Button.Group>
+          <Header floated="left" as="h1">
+            Dostępne przepisy:
+          </Header>
+        </Segment>
+        <Item.Group divided>
+          {recipes
+            .slice(0, counter)
+            .map(item => <RecipeItem key={item.id} recipe={item.id} />)}
+        </Item.Group>
+      </div>
+    }
+  </Counter>
 
 const mapStateToProps = state => {
-  return {recipes: getFilteredRecipes(state)};
+  return {
+    recipes: getFilteredRecipes(state)
+  };
 };
 
-export default connect(mapStateToProps, null)(RecipeList);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    recipeRefresh: () => dispatch({
+      type: 'RECIPES_REFRESH'
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
