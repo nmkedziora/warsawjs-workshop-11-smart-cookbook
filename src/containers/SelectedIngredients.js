@@ -20,7 +20,16 @@ const SelectedIngredients = ({ ingredients = [], onDelete }) => {
 };
 
 const mapStateToProps = state => {
-  return {selectedIngredients: getSelectedIngredients(state)}
+  return {ingredients: getSelectedIngredients(state)}
 }
 
-export default connect(mapStateToProps, null)(SelectedIngredients);
+const mapDispatchToProps = dispatch => {
+  return {
+    onDelete: ingredient => dispatch({
+      type: 'DESELECT_INGREDIENT',
+      payload: ingredient
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedIngredients);

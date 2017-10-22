@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { mergeEntities } from './utils'
-import uniq from 'lodash/uniq';
+import { uniq, without } from 'lodash';
 
 const recipes = (state = {order: [], entities: {}, loading: false}, action) => {
   switch (action.type) {
@@ -18,6 +18,10 @@ const isAppLoading = (state = false, action) => {
 
 const selectedIngredients = (state = [], action) => {
   switch (action.type) {
+    case 'SELECT_INGREDIENT':
+      return uniq([...state, action.payload]);
+    case 'DESELECT_INGREDIENT':
+      return without(state, action.payload);
     default:
       return state;
   }

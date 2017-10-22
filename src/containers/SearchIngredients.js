@@ -35,4 +35,13 @@ const mapStateToProps = state => {
   return {options}
 }
 
-export default connect(mapStateToProps, null)(SearchIngredients);
+const mapDispatchToProps = dispatch => {
+  return {
+    addIngredient: ingredient => dispatch({
+      type: 'SELECT_INGREDIENT',
+      payload: ingredient
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredients);

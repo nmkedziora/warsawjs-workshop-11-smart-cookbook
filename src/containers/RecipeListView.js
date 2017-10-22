@@ -4,7 +4,7 @@ import RecipeItem from "./RecipeItem";
 import Counter from "./Counter";
 import {Button, Header, Item, Segment} from "semantic-ui-react";
 
-import { getRecipes } from '../selectors';
+import { getFilteredRecipes } from '../selectors';
 
 // here you should use function as a children, using Counter component
 // to display -, + and amount how many recipes should be displayed
@@ -26,7 +26,7 @@ const RecipeList = ({ recipes = [], recipeRefresh }) =>
     </div>
 
 const mapStateToProps = state => {
-  return {recipes: getRecipes(state)};
+  return {recipes: getFilteredRecipes(state)};
 };
 
 export default connect(mapStateToProps, null)(RecipeList);
