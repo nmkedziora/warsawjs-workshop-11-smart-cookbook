@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from 'react-redux';
 import RecipeItem from "./RecipeItem";
 import Counter from "./Counter";
+import LoadingInfo from './LoadingInfo';
 import {Button, Header, Item, Segment} from "semantic-ui-react";
 import { CALL_API } from 'redux-api-middleware';
-import { getFilteredRecipes } from '../selectors';
+import { getFilteredRecipes, isRecipesLoading } from '../selectors';
 
 const refreshAction = {
   [CALL_API]: {
@@ -41,7 +42,8 @@ const RecipeList = ({ recipes = [], recipeRefresh }) =>
 
 const mapStateToProps = state => {
   return {
-    recipes: getFilteredRecipes(state)
+    recipes: getFilteredRecipes(state),
+    isLoading: isRecipesLoading(state)
   };
 };
 
@@ -51,4 +53,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  LoadingInfo({ message: 'Ładowanie danych', selector: props => props.isLoading})(RecipeList)
+);

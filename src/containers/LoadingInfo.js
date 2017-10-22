@@ -7,7 +7,7 @@ import {
 const message = "Loading";
 const selector = () => false;
 
-export default props => {
+export default ({ message, selector }) => WrappedComponent => props => {
   const isLoading = selector(props);
   return isLoading ? (
     <Message icon>
@@ -18,6 +18,6 @@ export default props => {
       </Message.Content>
     </Message>
   ) : (
-    <div></div> // Here should be
+    <WrappedComponent {...props} /> // Here should be
   );
 }
